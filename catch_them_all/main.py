@@ -48,7 +48,6 @@ class Enemy(Entity):
             self.z = randint(30, 40)
             self.main_color = color.random_color()
             self.color = self.main_color
-            print(score.text)
             score.text = str(int(score.text)+1)
 
 
