@@ -1,8 +1,7 @@
 from random import randint
-from ursina import * 
+from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 
-COUNT = 0
 app = Ursina()
 window.exit_button.visible = True
 
@@ -15,7 +14,6 @@ class Voxel(Button):
             model='cube',
             origin_y=.5,
             color=color.random_color(),
-            highlight_color=color.lime,
             alpha=0.5
         )
 
@@ -44,14 +42,18 @@ class Enemy(Entity):
             self.z = randint(20, 40)
 
     def on_click(self):
-        global COUNT
         self.color = color.red
         self.count = 2
         if self.z < 7:
             self.z = randint(30, 40)
             self.main_color = color.random_color()
-            self.color= self.main_color
-        COUNT += 1
+            self.color = self.main_color
+            print(score.text)
+            score.text = str(int(score.text)+1)
+
+
+player = FirstPersonController()
+score = Text(text='1', y=.43, x=-.75, scale=1.5, origin=(0, 0), background=True)
 
 for i in range(5):
     Enemy()
@@ -60,11 +62,8 @@ for z in range(100):
     for x in range(10):
         Voxel(position=(x, 0, z))
 
-player = FirstPersonController()
-e = Entity(model='Lightsaber', scale=(0.05,0.05,0.05))
 
 def update():
-    print(COUNT)
     if player.x >= 9:
         player.x = 9
     if player.x <= 1:
