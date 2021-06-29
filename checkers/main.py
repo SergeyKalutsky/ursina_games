@@ -15,11 +15,16 @@ class BoardSquere(Entity):
         super().__init__(
             model='cube',
             scale=scale,
+            collider='box',
             color=get_color(x, z),
             position=(x*scale[0], 0, z*scale[2])
         )
-        self.x = x*scale[0]
-        self.z = z*scale[2]
+        self._x = x
+        self._y = z
+        self.occupied = False
+    
+    def on_click(self):
+        print(self._x, self._y)
 
 
 def make_board():
