@@ -32,6 +32,8 @@ class Checker(Entity):
 
     def on_click(self):
         self.color = color.green
+        if game.selected_checker is not None:
+            game.selected_checker.selected = False
         game.selected_checker = self
         self.selected = True
 
