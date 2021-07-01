@@ -45,8 +45,8 @@ class SpaceShip(Entity):
             self.cooldown -= time.dt
 
 def change_color():
-    ship.texture = ship.textures[ship.tecture_indx % len(ship.textures)] 
     ship.tecture_indx += 1
+    ship.texture = ship.textures[ship.tecture_indx % len(ship.textures)] 
 
 
 b = Button(color=color.gray, icon='assets/color_picker', scale=.1, x=0.7, y=0.4)
