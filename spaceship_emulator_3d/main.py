@@ -1,10 +1,9 @@
 import os
 from subprocess import check_call
 from ursina import *
-
+from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
-EditorCamera()
 
 
 class Bullet(Entity):
@@ -18,9 +17,9 @@ class Bullet(Entity):
             destroy(self)
 
 
-class SpaceShip(Entity):
+class SpaceShip(FirstPersonController):
     def __init__(self):
-        super().__init__(model='assets/StarSparrow01')
+        super().__init__(model='assets/StarSparrow01', parent=camera, origin=(0,0.7,-10),)
         # cooldown
         self.cooldown = 0
         self.cooldown_limit = 0.5
@@ -28,7 +27,6 @@ class SpaceShip(Entity):
         self.tecture_indx = 0
         self.textures = [f.split('.')[0] for f in os.listdir('textures')]
         self.texture = self.textures[self.tecture_indx]
-
 
     def update(self):
         if held_keys['d']:
@@ -44,12 +42,14 @@ class SpaceShip(Entity):
         if self.cooldown > 0:
             self.cooldown -= time.dt
 
+
 def change_color():
     ship.tecture_indx += 1
-    ship.texture = ship.textures[ship.tecture_indx % len(ship.textures)] 
+    ship.texture = ship.textures[ship.tecture_indx % len(ship.textures)]
 
 
-b = Button(color=color.gray, icon='assets/color_picker', scale=.1, x=0.7, y=0.4)
+b = Button(color=color.gray, icon='assets/color_picker',
+           scale=.1, x=0.7, y=0.4)
 b.on_click = change_color
 ship = SpaceShip()
 
